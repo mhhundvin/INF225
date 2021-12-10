@@ -1,3 +1,4 @@
+import enum
 from symbol import Symbol
 from random import choice
 from in_dict import in_dict
@@ -38,14 +39,15 @@ class Sequence(Symbol):
         depth += 1
         # print(f'Sequence args: {self.args}')
         text = ''
-        for arg in self.args:
+        for idx, arg in enumerate(self.args):
+            # print(f'\t{idx} --> Sequence arg: {arg}')
             arg = in_dict(arg, self.rules, self.tokens, self.imports)
-            # print(f'\t-->Sequence arg: {arg}')
+            # print(f'\t-->Sequence in_dict: {arg}')
 
             if isinstance(arg, Symbol):
-                # print(f'\t\t-->isinstance: true')
+                # print(f'\t\t-->isinstance: true\t arg: {arg}')
                 x = arg.generate(depth)
-                # print(f'\tSeq --> x {x}\targ: {arg}')
+                # print(f'\t\t\tSeq --> x {x}\targ: {arg}')
                 text += x
                 # print(f'\t\t--> text: {text}')
             else:

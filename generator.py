@@ -12,6 +12,7 @@ from literal_literal_range import Literal, Literal_range
 rules = {}
 tokens = {}
 imports = {}
+aliases = {}
 
 
 class Compiler(Transformer):
@@ -40,6 +41,9 @@ class Compiler(Transformer):
         return Or(args, rules, tokens, imports)
 
     def alias(self, args):
+        # if len(args) > 1:
+        #     imports[args[-1]] = args[0]
+        # aliases[args[-1]] = args[0]
         return args[0]
 
     def expansion(self, args):
@@ -90,7 +94,7 @@ class Compiler(Transformer):
         return Literal_range(args[0], args[-1])
     
     def literal(self, args):
-        return Literal(args, rules, tokens, imports)
+        return Literal(args)    # , rules, tokens, imports)
 
     def name(self, args):
         return args[0]
@@ -149,8 +153,18 @@ for (name,arg) in rules.items():
     print('\n---------------------------------------\n')
     
 
+# print(f'echo: {rules["echo"]}')
+# arg = in_dict('echo', rules, tokens, imports)
+# # print(f'arg after in_dict: {arg}')
+# print(arg.generate(0))
+
+# print(f"{tokens['_ECHO']}: {tokens['_ECHO'].generate(0)}")
+
 
 # print('\n\n---------------------------------------')
 # print('Example for list (' , rules['list'] ,'):\n')
 # print(rules['list'].generate(0))
 # print()
+
+# for k,v in aliases.items():
+#     print(f'{k}: {v}') 

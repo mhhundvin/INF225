@@ -4,11 +4,11 @@ import exrex
 
 
 class Literal(Symbol):
-    def __init__(self, args, rules, tokens, imports):
+    def __init__(self, args):    # , rules, tokens, imports):
         self.args = args[0]
-        self.rules = rules
-        self.tokens = tokens
-        self.imports = imports
+        # self.rules = rules
+        # self.tokens = tokens
+        # self.imports = imports
         
     
     def generate(self, depth):
@@ -16,7 +16,9 @@ class Literal(Symbol):
             return ''
         depth += 1
         arg = self.args
-        arg = in_dict(arg, self.rules, self.tokens, self.imports)
+        # print(f'Literal arg: {arg}')
+        # arg = in_dict(arg, self.rules, self.tokens, self.imports)
+        # print(f'\targ after in_dict: {arg}')
         if (isinstance(arg, Symbol)):
             return arg.generate(depth)
         return f'{arg}'
