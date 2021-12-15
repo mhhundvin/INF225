@@ -12,7 +12,7 @@ from literal_literal_range import Literal, Literal_range
 rules = {}
 tokens = {}
 imports = {}
-aliases = {}
+# aliases = {}
 
 
 class Compiler(Transformer):

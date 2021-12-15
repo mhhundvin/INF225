@@ -16,11 +16,9 @@ class Literal(Symbol):
             return ''
         depth += 1
         arg = self.args
-        # print(f'Literal arg: {arg}')
-        # arg = in_dict(arg, self.rules, self.tokens, self.imports)
-        # print(f'\targ after in_dict: {arg}')
-        if (isinstance(arg, Symbol)):
-            return arg.generate(depth)
+        # if (isinstance(arg, Symbol)):
+        #     print(f'---> literal is symbol')
+        #     return arg.generate(depth)
         return f'{arg}'
 
 class Literal_range(Symbol):

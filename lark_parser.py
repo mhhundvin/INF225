@@ -7,4 +7,4 @@ yaml_grammar = open('grammars/yaml.lark', 'r').read()
 
 parser = Lark(larkGrammer)
 
-tree = parser.parse(hedy_grammar)
+tree = parser.parse(json_grammar)
