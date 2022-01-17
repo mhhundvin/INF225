@@ -5,8 +5,9 @@ import exrex
 import regex as re
 from text_number import Text, Number
 from in_dict import in_dict
-from or_sequence_repeat import Or, Sequence, Repeat
-from literal_literal_range import Literal, Literal_range
+from or_sequence_repeat import Or, Sequence, Repeat, Group
+from literal_literal_range import Literal, Literal_range, Regular_expression
+from symbol import NonTerminal, Terminal, Token
 
 
 rules = {}
@@ -30,7 +31,8 @@ class Compiler(Transformer):
     def import_statement(self, args):
         return args
     def import_path(self, args):
-        arg = args[-1]
+        arg = str(args[-1])
+        print(f'\t\t-->import_statment: {arg}')
         if 'STRING' in arg:
             imports[arg] = Text()
         elif 'INT' in arg or 'NUMBER' in arg:
@@ -82,6 +84,10 @@ class Compiler(Transformer):
         return args
         # group og maybe: returner args?
     
+    def group(self, args):
+        print(f'group: {args[0]}')
+        return Group(args, rules, tokens, imports)
+
     def maybe(self, args):
         print(f'maybe: {args[0]}')
         return Or([args[0], args[0], ''], rules, tokens, imports)
@@ -104,24 +110,26 @@ class Compiler(Transformer):
     def OP(self, args):
         return f'{args}'
     def RULE(self, args):
-        if args[0] == '?':
-            return f'{args[1:]}'
-        return f'{args}'
+        if args[0] == '?' or args[0] == '!':
+            return NonTerminal(f'{args[1:]}')
+        return NonTerminal(f'{args}')
     def TOKEN(self, args):
-        return f'{args}'
+        return Token(f'{args}')
     def STRING(self, args):
-        return args[1:-1]   # args
+        return Terminal(args[1:-1])
     def REGEXP(self, args):
         # print(f'\n-----------------REGEXP--------------------\n')
         print(f'\REGEXP args: {args}')
         reg = f'{args[1:-1]}'
-        new = re.sub('\\\p{Lu}', 'A-Z', reg)
-        new = re.sub('\\\p{Ll}', 'a-z', new)
-        new = re.sub('\\\p{..}', '', new)
+        # print(f'\t\tREG: {reg}')
+        # new = re.sub('\\\p{Lu}', 'A-Z', reg)
+        # new = re.sub('\\\p{Ll}', 'a-z', new)
+        # new = re.sub('\\\p{..}', '', new)
         # print(f'\targs: {new}')
-        x = exrex.getone(new)
+        # x = exrex.getone(new)
         # print(f'\tgen: {x}')
-        return f'{x}'
+        # return f'{x}'
+        return Regular_expression(reg)
 
     def _NL(self, args):
         return f'{args}'    
@@ -152,6 +160,9 @@ for (name,arg) in rules.items():
     print(f'\t{eks}')
     print('\n---------------------------------------\n')
     
+# for (k,v) in rules.items():
+#     print(f'{k} : {v}')
+#     print(f'\t{k in rules.keys()}')    
 
 # print(f'echo: {rules["echo"]}')
 # arg = in_dict('echo', rules, tokens, imports)
