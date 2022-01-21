@@ -1,8 +1,5 @@
 from lark_parser import tree
 from lark.visitors import Transformer
-from random import choice
-import exrex
-import regex as re
 from text_number import Text, Number
 from in_dict import in_dict
 from or_sequence_repeat import Or, Sequence, Repeat, Group
@@ -84,9 +81,9 @@ class Compiler(Transformer):
         return args
         # group og maybe: returner args?
     
-    def group(self, args):
-        print(f'group: {args[0]}')
-        return Group(args, rules, tokens, imports)
+    # def group(self, args):
+    #     print(f'group: {args[0]}')
+    #     return Group(args, rules, tokens, imports)
 
     def maybe(self, args):
         print(f'maybe: {args[0]}')
@@ -146,20 +143,38 @@ class Compiler(Transformer):
 
 Compiler().transform(tree)
 print('\n\n------------------------------------------------------------------')
-print('-------------------EXAMPLES---------------------------------------')
+print('-------------------SHORTEST POSSIBLE---------------------------------------')
 print('------------------------------------------------------------------\n')
 
-for (name,arg) in rules.items():
-    print(f'Example for {name}:')
-    
+for (name, arg) in rules.items():
+    print(f'Shortest possibilities for {name}')
     arg = in_dict(arg, rules, tokens, imports)
-    
-    eks = arg.generate(0)
 
-    # eks = re.sub(' +', ' ', eks)
+    eks = arg.generate_shortest(name)
+
     print(f'\t{eks}')
     print('\n---------------------------------------\n')
+
+
+
+# print('\n\n------------------------------------------------------------------')
+# print('-------------------EXAMPLES---------------------------------------')
+# print('------------------------------------------------------------------\n')
+
+# for (name,arg) in rules.items():
+#     print(f'Example for {name}:')
     
+#     arg = in_dict(arg, rules, tokens, imports)
+    
+#     eks = arg.generate(0)
+
+#     # eks = re.sub(' +', ' ', eks)
+#     print(f'\t{eks}')
+#     print('\n---------------------------------------\n')
+    
+
+
+
 # for (k,v) in rules.items():
 #     print(f'{k} : {v}')
 #     print(f'\t{k in rules.keys()}')    

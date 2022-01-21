@@ -32,7 +32,7 @@ name_list: "(" name ("," name)* ")"
      | atom "~" SIGNED_INT -> repeat
      | atom "~" SIGNED_INT ".." SIGNED_INT -> expr_range
 
-?atom: "(" expansions ")" -> group
+?atom: "(" expansions ")" //-> group
      | "[" expansions "]" -> maybe
      | value
 

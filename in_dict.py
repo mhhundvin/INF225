@@ -15,9 +15,11 @@ def in_dict(arg, rules, tokens, imports):
 
 def new_depth(arg, depth):
     if isinstance(arg, NonTerminal):
-        depth = 0
-    elif isinstance(arg, Terminal):
-        depth += 1
-    elif isinstance(arg, Token):
-        depth += 1
-    return depth
+        return 0
+    return depth + 1
+    #     depth = 0
+    # elif isinstance(arg, Terminal):
+    #     depth += 1
+    # elif isinstance(arg, Token):
+    #     depth += 1
+    # return depth

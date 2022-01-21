@@ -80,7 +80,7 @@ invalid: textwithoutspaces text?
 
 _EOL: "\r"?"\n"
 
-text: /(([A-Za-z][A-Za-z ]+[A-Za-z]))/    // /([^\n]+)/ -> text //anything can be parsed except for a newline
+text: /([A-Za-z][A-Za-z ]+[A-Za-z])/    // /([^\n]+)/ -> text //anything can be parsed except for a newline
 textwithoutspaces: /([A-Za-z]+)/    // /([^\n *+-\/]+)/ -> text //anything can be parsed except for spaces (plus: a newline)
 
 %import common.DIGIT

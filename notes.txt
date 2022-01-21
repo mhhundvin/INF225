@@ -1,0 +1,30 @@
+Recursion depth:
+	NonTerminal: 	depth = 0
+	Terminal:		depth += 1
+	Token:			depth += 1
+
+This gives:
+	maximum recursion depth exceeded
+with max_depth = 50 for the verilog.lark and python3.lark
+
+Don't get this error with:
+	NonTerminal:	depth = 0
+	Else:			depth += 1
+
+but still get a lot from python3.lark. Have not let it finish, takes too long.
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+exrex dose not work for \w, and \p{..}
+	Can replace it manualy in the expression before generating, in the Regular_expression class
+import re
+new = re.sub('\\\p{Lu}', 'A-Z', reg)
+new = re.sub('\\\p{Ll}', 'a-z', new)
+new = re.sub('\\\p{..}', '', new)
+new = re.sub('\\\w', '[A-Za-Z0-9_]', new)
+
+
+'\D' -> [^0-9], '\W' -> [^A-Za-z0-9_] 			(and '\S')
+
